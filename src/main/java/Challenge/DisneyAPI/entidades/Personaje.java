@@ -4,7 +4,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -13,19 +13,21 @@ public class Personaje {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;    
+    private String id;
     private String img;
+    private String nombre;
     private Integer edad;
     private Integer peso;
     private String historia;
-    @OneToMany
+    @ManyToMany
     private List<Pelicula> peliculas;
 
     public Personaje() {
     }
 
-    public Personaje(String img, Integer edad, Integer peso, String historia, List<Pelicula> peliculas) {
+    public Personaje(String img, String nombre, Integer edad, Integer peso, String historia, List<Pelicula> peliculas) {
         this.img = img;
+        this.nombre = nombre;
         this.edad = edad;
         this.peso = peso;
         this.historia = historia;
@@ -46,6 +48,14 @@ public class Personaje {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public Integer getEdad() {
@@ -82,8 +92,7 @@ public class Personaje {
 
     @Override
     public String toString() {
-        return "Personaje{" + "id=" + id + ", img=" + img + ", edad=" + edad + ", peso=" + peso + ", historia=" + historia + ", peliculas=" + peliculas + '}';
+        return "Personaje{" + "id=" + id + ", img=" + img + ", nombre=" + nombre + ", edad=" + edad + ", peso=" + peso + ", historia=" + historia + ", peliculas=" + peliculas + '}';
     }
-    
     
 }

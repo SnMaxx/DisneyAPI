@@ -16,26 +16,40 @@ public class PersonajeServicio {
     private PersonajeRepositorio pjRepo;
     
     @Transactional
-    public Personaje save(String img, Integer edad, Integer peso, String historia, List<Pelicula> peliculas){
-        Personaje pj = new Personaje(img, edad, peso, historia, peliculas);
+    public Personaje crearPersonaje(Personaje pj){
         return pjRepo.save(pj);
     }
     
     @Transactional
-    public Personaje update(String id, String img, Integer edad, Integer peso, String historia, List<Pelicula> peliculas) throws Exception{
-        Optional<Personaje> personaje = pjRepo.findById(id);
-        if(!personaje.isPresent()) throw new Exception("ID invalido");
-        Personaje pj = personaje.get();
-        pj.setImg(img);
-        pj.setEdad(edad);
-        pj.setPeso(peso);
-        pj.setHistoria(historia);
-        pj.setPeliculas(peliculas);
+    public Personaje editarPersonaje(String id, Personaje pj){
+        pj.setId(id);
         return pjRepo.save(pj);
     }
     
     @Transactional
     public void delete(String id){
-         
+         pjRepo.deleteById(id);
     }
+    
+    public List<Personaje> findAll(){
+        return pjRepo.findAll();
+    }
+    
+    public Personaje findById(String id) throws Exception{
+        Optional<Personaje> personaje = pjRepo.findById(id);
+        if(!personaje.isPresent()) throw new Exception("ID invalido");
+        return personaje.get();
+    }
+    
+    public List<Personaje> findByNombre(String name){
+        return pjRepo.findByNombre(name);
+    };
+    
+    public List<Personaje> findByEdad(Integer name){
+        return pjRepo.findByEdad(name);
+    };
+    
+    public List<Personaje> findByPelicula(Pelicula peli){
+        return pjRepo.findByPeliculas(peli);
+    };
 }

@@ -1,10 +1,11 @@
 package Challenge.DisneyAPI.entidades;
 
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -15,16 +16,18 @@ public class Pelicula {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     private String img;
+    private String titulo;
     private Integer estreno;
     private Integer calificacion;
-    @OneToMany
+    @ManyToMany
     private List<Personaje> personajes;
 
     public Pelicula() {
     }
 
-    public Pelicula(String img, Integer estreno, Integer calificacion, List<Personaje> personajes) {
+    public Pelicula(String img, String titulo, Integer estreno, Integer calificacion, List<Personaje> personajes) {
         this.img = img;
+        this.titulo = titulo;
         this.estreno = estreno;
         this.calificacion = calificacion;
         this.personajes = personajes;
@@ -46,6 +49,14 @@ public class Pelicula {
         this.img = img;
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+    
     public Integer getEstreno() {
         return estreno;
     }
@@ -72,7 +83,7 @@ public class Pelicula {
 
     @Override
     public String toString() {
-        return "Pelicula{" + "id=" + id + ", img=" + img + ", estreno=" + estreno + ", calificacion=" + calificacion + ", personajes=" + personajes + '}';
+        return "Pelicula{" + "id=" + id + ", img=" + img + ", titulo=" + titulo + ", estreno=" + estreno + ", calificacion=" + calificacion + ", personajes=" + personajes + '}';
     }
-    
+
 }
