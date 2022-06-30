@@ -27,7 +27,7 @@ public class PersonajeServicio {
     }
     
     @Transactional
-    public void delete(String id){
+    public void borrarPersonaje(String id){
          pjRepo.deleteById(id);
     }
     
@@ -35,7 +35,7 @@ public class PersonajeServicio {
         return pjRepo.findAll();
     }
     
-    public Personaje findById(String id) throws Exception{
+    public Personaje buscarPorId(String id) throws Exception{
         Optional<Personaje> personaje = pjRepo.findById(id);
         if(!personaje.isPresent()) throw new Exception("ID invalido");
         return personaje.get();

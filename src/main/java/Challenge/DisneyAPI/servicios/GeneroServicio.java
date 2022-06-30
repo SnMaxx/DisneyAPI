@@ -13,10 +13,7 @@ public class GeneroServicio {
     private GeneroRepositorio genRepo;
     
     @Transactional
-    public Genero crearGenero(String img, String nombre){
-        Genero genero = new Genero();
-        genero.setImg(img);
-        genero.setNombre(nombre);
+    public Genero crearGenero(Genero genero){
         return genRepo.save(genero);
     }
 }
