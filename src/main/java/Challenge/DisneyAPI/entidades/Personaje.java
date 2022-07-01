@@ -1,5 +1,6 @@
 package Challenge.DisneyAPI.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +20,9 @@ public class Personaje {
     private Integer edad;
     private Integer peso;
     private String historia;
-    @ManyToMany
+    
+    @ManyToMany(mappedBy = "personajes")
+    @JsonIgnore
     private List<Pelicula> peliculas;
 
     public Personaje() {

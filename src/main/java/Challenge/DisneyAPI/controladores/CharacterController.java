@@ -58,7 +58,7 @@ public class CharacterController {
         if(age.isPresent())
             return pjServ.buscarPorPeso(peso.get());
         if(movies.isPresent())
-            return pjServ.buscarPorPelicula(peliServ.findById(movies.get()));
+            return pjServ.buscarPorPelicula(peliServ.buscarPorId(movies.get()));
         return pjServ.traerTodo();
     }
     

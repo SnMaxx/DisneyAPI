@@ -4,6 +4,8 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -18,7 +20,12 @@ public class Pelicula {
     private String titulo;
     private Integer estreno;
     private Integer calificacion;
+    
     @ManyToMany
+    @JoinTable(
+    name = "personaje_pelicula",
+    joinColumns = @JoinColumn(name = "pelicula_id"),
+    inverseJoinColumns = @JoinColumn(name = "personaje_id"))
     private List<Personaje> personajes;
 
     public Pelicula() {
