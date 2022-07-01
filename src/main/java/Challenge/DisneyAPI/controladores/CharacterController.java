@@ -2,6 +2,7 @@ package Challenge.DisneyAPI.controladores;
 
 import Challenge.DisneyAPI.entidades.Pelicula;
 import Challenge.DisneyAPI.entidades.Personaje;
+import Challenge.DisneyAPI.entidades.PersonajeDTO;
 import Challenge.DisneyAPI.servicios.PeliculaServicio;
 import Challenge.DisneyAPI.servicios.PersonajeServicio;
 import java.util.List;
@@ -47,16 +48,18 @@ public class CharacterController {
         pjServ.borrarPersonaje(id);
         return ResponseEntity.ok().build();
     }
-            
+
     @GetMapping
-    public List<Personaje> personajes(@RequestParam Optional<String> name,@RequestParam Optional<Integer> age,@RequestParam Optional<String> movies) throws Exception{
+    public List<PersonajeDTO> personajes(@RequestParam Optional<String> name, @RequestParam Optional<Integer> age, @RequestParam Optional<Integer> peso, @RequestParam Optional<String> movies) throws Exception{
         if(name.isPresent())
-            return pjServ.findByNombre(name.get());
+            return pjServ.buscarPorNombre(name.get());
         if(age.isPresent())
-            return pjServ.findByEdad(age.get());
+            return pjServ.buscarPorEdad(age.get());
+        if(age.isPresent())
+            return pjServ.buscarPorPeso(peso.get());
         if(movies.isPresent())
-            return pjServ.findByPelicula(peliServ.findById(movies.get()));
-        return pjServ.findAll();
+            return pjServ.buscarPorPelicula(peliServ.findById(movies.get()));
+        return pjServ.traerTodo();
     }
     
     @GetMapping("/{id}")
