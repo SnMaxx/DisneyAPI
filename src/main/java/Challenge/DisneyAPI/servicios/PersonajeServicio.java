@@ -3,7 +3,7 @@ package Challenge.DisneyAPI.servicios;
 import java.util.List;
 import Challenge.DisneyAPI.entidades.Pelicula;
 import Challenge.DisneyAPI.entidades.Personaje;
-import Challenge.DisneyAPI.entidades.PersonajeDTO;
+import Challenge.DisneyAPI.dtos.PersonajeDTO;
 import Challenge.DisneyAPI.repositorios.PersonajeRepositorio;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -23,8 +23,11 @@ public class PersonajeServicio {
     }
     
     @Transactional
-    public Personaje editarPersonaje(String id, Personaje pj){
+    public Personaje editarPersonaje(String id, Personaje pj) throws Exception{
+        Optional<Personaje> pjAnterior = pjRepo.findById(id);
+        if(!pjAnterior.isPresent()) throw new Exception("ID invalido");
         pj.setId(id);
+        pj.setPeliculas(pjAnterior.get().getPeliculas());
         return pjRepo.save(pj);
     }
     
@@ -33,12 +36,8 @@ public class PersonajeServicio {
          pjRepo.deleteById(id);
     }
     
-    public List<PersonajeDTO> traerTodo(){
-        List<PersonajeDTO> personajeDTO = new ArrayList<>();
-        for (Personaje personaje : pjRepo.findAll()) {
-            personajeDTO.add(new PersonajeDTO(personaje));
-        }
-        return personajeDTO;
+    public List<Personaje> traerTodo(){
+        return pjRepo.findAll();
     }
     
     public Personaje buscarPorId(String id) throws Exception{
@@ -47,35 +46,19 @@ public class PersonajeServicio {
         return personaje.get();
     }
     
-    public List<PersonajeDTO> buscarPorNombre(String name){
-        List<PersonajeDTO> personajeDTO = new ArrayList<>();
-        for (Personaje personaje : pjRepo.findByNombre(name)) {
-            personajeDTO.add(new PersonajeDTO(personaje));
-        }
-        return personajeDTO;
+    public List<Personaje> buscarPorNombre(String name){
+        return pjRepo.findByNombre(name);
     };
     
-    public List<PersonajeDTO> buscarPorEdad(Integer edad){
-        List<PersonajeDTO> personajeDTO = new ArrayList<>();
-        for (Personaje personaje : pjRepo.findByEdad(edad)) {
-            personajeDTO.add(new PersonajeDTO(personaje));
-        }
-        return personajeDTO;
+    public List<Personaje> buscarPorEdad(Integer edad){
+        return pjRepo.findByEdad(edad);
     };
     
-    public List<PersonajeDTO> buscarPorPeso(Integer peso){
-        List<PersonajeDTO> personajeDTO = new ArrayList<>();
-        for (Personaje personaje : pjRepo.findByPeso(peso)) {
-            personajeDTO.add(new PersonajeDTO(personaje));
-        }
-        return personajeDTO;
+    public List<Personaje> buscarPorPeso(Integer peso){
+        return pjRepo.findByPeso(peso);
     };
     
-    public List<PersonajeDTO> buscarPorPelicula(Pelicula peli){
-        List<PersonajeDTO> personajeDTO = new ArrayList<>();
-        for (Personaje personaje : pjRepo.findByPeliculas(peli)) {
-            personajeDTO.add(new PersonajeDTO(personaje));
-        }
-        return personajeDTO;
+    public List<Personaje> buscarPorPelicula(Pelicula peli){
+        return pjRepo.findByPeliculas(peli);
     };
 }
